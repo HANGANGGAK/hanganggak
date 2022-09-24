@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import compression from 'compression';
+import rateLimit from 'express-rate-limit';
 import * as ip from 'ip';
 import * as dotenv from 'dotenv';
 
@@ -14,6 +15,12 @@ async function bootstrap() {
 
   app.enableCors();
   app.use(compression());
+  app.use(
+    rateLimit({
+      windowMs: 10 * 60 * 1000,
+      max: 50,
+    }),
+  );
 
   await app.listen(PORT);
 

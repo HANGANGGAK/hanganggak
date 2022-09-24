@@ -29,6 +29,7 @@
     "class-validator": "^0.13.2",
     "compression": "^1.7.4",
     "dotenv": "^16.0.2",
+    "express-rate-limit": "^6.6.0",
     "ip": "^1.1.8",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
