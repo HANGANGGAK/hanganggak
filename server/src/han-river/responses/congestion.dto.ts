@@ -32,7 +32,7 @@ export class congestionResponse {
   '30대비율': number;
 
   @Expose({ name: 'PPLTN_RATE_40' })
-  '40대이하': number;
+  '40대비율': number;
 
   @Expose({ name: 'PPLTN_RATE_50' })
   '50대비율': number;
