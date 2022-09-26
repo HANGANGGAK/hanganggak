@@ -5,8 +5,13 @@ import { HanRiverService } from './han-river.service';
 export class HanRiverController {
   constructor(private riverSpotService: HanRiverService) {}
 
+  @Get()
+  getHanRiverSummary(): object {
+    return this.riverSpotService.getHanRiverSummary();
+  }
+
   @Get(':place')
-  getHanRiverData(@Param() params): any {
+  getHanRiverData(@Param() params): object {
     return this.riverSpotService.getHanRiverData(params.place);
   }
 }

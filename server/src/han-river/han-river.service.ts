@@ -12,19 +12,47 @@ dotenv.config();
 
 @Injectable()
 export class HanRiverService {
-  async getHanRiverData(place): Promise<any> {
+  async getDataInJson(place) {
     const apiUrl = `${process.env.BASE_URL}/${process.env.AUTH_KEY}/xml/citydata/1/5/${place}한강공원`;
+    const xmlResult = await axios.get(encodeURI(apiUrl));
 
-    const xmlResult = await axios({
-      url: encodeURI(apiUrl),
-      method: 'GET',
-      headers: { 'Content-Type': 'Application/xml' },
-    });
-
-    const result = convert.xml2json(xmlResult.data, {
+    return convert.xml2json(xmlResult.data, {
       compact: true,
       spaces: 4,
     });
+  }
+
+  async getHanRiverSummary(): Promise<object> {
+    const hanRiverList = ['뚝섬', '망원', '반포', '이촌', '잠실'];
+
+    const result = {};
+    for (let i = 0; i < hanRiverList.length; i++) {
+      const jsonResult = await this.getDataInJson(hanRiverList[i]);
+
+      const cityData = JSON.parse(jsonResult)['SeoulRtd.citydata']['CITYDATA'];
+      const placeName = cityData['AREA_NM']['_text'];
+      const congestionMessage =
+        cityData['LIVE_PPLTN_STTS']['LIVE_PPLTN_STTS']['AREA_CONGEST_LVL'][
+          '_text'
+        ];
+      const liveTemp =
+        cityData['WEATHER_STTS']['WEATHER_STTS']['TEMP']['_text'];
+      const sunsetTime =
+        cityData['WEATHER_STTS']['WEATHER_STTS']['SUNSET']['_text'];
+
+      result[hanRiverList[i]] = {
+        placeName,
+        congestionMessage,
+        liveTemp,
+        sunsetTime,
+      };
+    }
+
+    return result;
+  }
+
+  async getHanRiverData(place): Promise<object> {
+    const result = await this.getDataInJson(place);
 
     const dataStatus =
       JSON.parse(result)['SeoulRtd.citydata']['RESULT']['RESULT.MESSAGE'][
