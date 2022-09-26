@@ -3,8 +3,9 @@ import {useHanRiverInfo} from "../../api/info";
 import {useQuery} from "react-query";
 
 const Info = () => {
-  const { data: search } = useQuery<string>('search');
-  // const
+  const { data: search } = useQuery<string>('search',() => '', {
+    staleTime: Infinity,
+  });
   const {isError, isLoading, data: hanRiverData} = useHanRiverInfo(search)
 
   useEffect(() => {
