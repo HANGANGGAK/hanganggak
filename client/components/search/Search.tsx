@@ -1,5 +1,4 @@
 import React, {ChangeEvent, useState, KeyboardEvent} from "react";
-import {useHanRiverInfo} from "../../api/info";
 import {useQueryClient} from "react-query";
 
 const Search = () => {
