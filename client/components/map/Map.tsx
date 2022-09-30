@@ -8,9 +8,8 @@ import ImageLayer from "ol/layer/Image";
 import Static from 'ol/source/ImageStatic';
 import {getCenter} from "ol/extent";
 
-
 const Map = ({children}: { children: React.ReactNode }) => {
-    const [mapObj, setMapObj] = useState<{ map: OlMap } | {}>({});
+    const [mapObj, setMapObj] = useState<{ map?: OlMap }>({map: undefined});
     const extent = [0, 0, 1920, 1080];
 
 
@@ -40,13 +39,14 @@ const Map = ({children}: { children: React.ReactNode }) => {
             }),
         });
 
+
         setMapObj({map});
 
         return () => map.setTarget(undefined);
     }, []);
 
     // ✨ MapContext.Provider에 객체 저장
-    return <MapContext.Provider value={{mapObj}}>{children}</MapContext.Provider>;
+    return <MapContext.Provider value={mapObj}>{children}</MapContext.Provider>;
 };
 
 export default Map;
