@@ -1,7 +1,18 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const path = require("path");
 
-module.exports = nextConfig
+/** @type {import('next').NextConfig} */
+module.exports = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")]
+  },
+  reactStrictMode: true,
+  async rewrites() {
+    return [
+      {
+        destination: `${process.env.API_SERVER_URL}`,
+        source: "/:path*"
+      },
+    ];
+  },
+  swcMinify: false
+};
