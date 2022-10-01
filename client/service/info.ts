@@ -4,7 +4,7 @@ import {Fetcher} from "./api";
 export const fetchHanRiverInfo = async (search: string | undefined ) => {
   const url = `/han-river/${search}`;
   const method = "get";
-  if (search === undefined || search === "") {
+  if (search === undefined) {
     return null
   } else {
     return Fetcher<any>({ url, method })
