@@ -23,6 +23,8 @@ const Wrapper = styled.div`
   padding: 10px 0;
   height: 60px;
   background-color: white;
+  left: 0;
+  top: 0;
   
   .logo {
     width: 150px;

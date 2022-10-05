@@ -16,7 +16,7 @@ const Search = () => {
   }
 
   return (
-    <div style={{ position: "fixed" }}>
+    <div>
       <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} onKeyUp={handleKeyUp}/>
       <button onClick={handleSearch}>검색</button>
     </div>

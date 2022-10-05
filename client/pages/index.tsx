@@ -9,6 +9,7 @@ import styled, {keyframes} from "styled-components";
 import Logo from "../public/logo2.svg"
 import Image from "next/image";
 import {Header} from "../components/common/Header"
+import {useQueryClient} from "react-query";
 
 const locatainData = [{
     name: "뚝섬",
@@ -33,7 +34,8 @@ const locatainData = [{
 ]
 
 const Home: NextPage = () => {
-    const {map} = React.useContext(MapContext);
+  const queryClient = useQueryClient();
+  const {map} = React.useContext(MapContext);
     const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
 
 
@@ -54,6 +56,12 @@ const Home: NextPage = () => {
                 //     position: data.position,
                 //     element: textTag,
                 // });
+
+              pulseTag.addEventListener('click', () => {
+                console.log(data.name)
+                queryClient.setQueryData("search", data.name)
+              });
+
                 const pulseMarker = new Overlay({
                     position: [data.position[0], data.position[1]],
                     element: pulseTag,
@@ -70,10 +78,13 @@ const Home: NextPage = () => {
         <Container>
             <Header />
             <MapWrapper id="map" />
+            <DataWrapper>
+                {/*<Search/>*/}
+                {/* <div style={{marginTop: "30px"}}/>*/}
+                <Info/>
+            </DataWrapper>
             {/*<div style={{display: "flex", flexDirection: "column", width: "30vw", height: "100vh", float: "right"}}>*/}
-            {/*    <Search/>*/}
-            {/*    <div style={{marginTop: "30px"}}/>*/}
-            {/*    <Info/>*/}
+            {/*
             {/*</div>*/}
         </Container>
 
@@ -99,7 +110,10 @@ const pulseAnimation = keyframes`
 
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: auto;
+    
+  //display: flex;
+  //flex-direction: column;
 
   .pulse {
     border-radius: 50%;
@@ -162,11 +176,14 @@ const Container = styled.div`
 
 const MapWrapper = styled.div`
     width: 100vw; 
-    height: 100vh; 
-    position: fixed; 
+    height: 50vh; 
+    //position: fixed; 
     margin-top: 60px;
 `;
 
-
+const DataWrapper = styled.div`
+    width: 100vw;
+    height: 100%;
+`;
 
 export default Home;

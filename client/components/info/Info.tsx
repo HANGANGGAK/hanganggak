@@ -26,42 +26,42 @@ const Info = () => {
           <br />
           { hanRiverData.congestion.장소혼잡도 !== "여유" || hanRiverData.liveWeather.강수형태 === "비" ? <>한강각이 안나와요 😞</> : <>한강각 😉</>  }
         </CongestionCard>
-        <DayWeatherCard>
-          <h2> 날씨</h2>
-          <h3>Cloudy<span>Wind 10km/h <span className="dot">•</span> Precip 0%</span></h3>
-          <h1>23°</h1>
-          <div className="sky">
-            <div className="sun"></div>
-            <div className="cloud">
-              <div className="circle-small"></div>
-              <div className="circle-tall"></div>
-              <div className="circle-medium"></div>
-            </div>
-          </div>
-          <table>
-            <tr>
-              <td>TUE</td>
-              <td>WED</td>
-              <td>THU</td>
-              <td>FRI</td>
-              <td>SAT</td>
-            </tr>
-            <tr>
-              <td>30°</td>
-              <td>34°</td>
-              <td>36°</td>
-              <td>34°</td>
-              <td>37°</td>
-            </tr>
-            <tr>
-              <td>17°</td>
-              <td>22°</td>
-              <td>19°</td>
-              <td>23°</td>
-              <td>19°</td>
-            </tr>
-          </table>
-        </DayWeatherCard>
+        {/*<DayWeatherCard>*/}
+        {/*  <h2> 날씨</h2>*/}
+        {/*  <h3>Cloudy<span>Wind 10km/h <span className="dot">•</span> Precip 0%</span></h3>*/}
+        {/*  <h1>23°</h1>*/}
+        {/*  <div className="sky">*/}
+        {/*    <div className="sun"></div>*/}
+        {/*    <div className="cloud">*/}
+        {/*      <div className="circle-small"></div>*/}
+        {/*      <div className="circle-tall"></div>*/}
+        {/*      <div className="circle-medium"></div>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*  <table>*/}
+        {/*    <tr>*/}
+        {/*      <td>TUE</td>*/}
+        {/*      <td>WED</td>*/}
+        {/*      <td>THU</td>*/}
+        {/*      <td>FRI</td>*/}
+        {/*      <td>SAT</td>*/}
+        {/*    </tr>*/}
+        {/*    <tr>*/}
+        {/*      <td>30°</td>*/}
+        {/*      <td>34°</td>*/}
+        {/*      <td>36°</td>*/}
+        {/*      <td>34°</td>*/}
+        {/*      <td>37°</td>*/}
+        {/*    </tr>*/}
+        {/*    <tr>*/}
+        {/*      <td>17°</td>*/}
+        {/*      <td>22°</td>*/}
+        {/*      <td>19°</td>*/}
+        {/*      <td>23°</td>*/}
+        {/*      <td>19°</td>*/}
+        {/*    </tr>*/}
+        {/*  </table>*/}
+        {/*</DayWeatherCard>*/}
         </>
         :
         <div>none</div>
