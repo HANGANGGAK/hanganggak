@@ -6,6 +6,9 @@ import React from "react";
 import Overlay from "ol/Overlay";
 import {useHanRiverInfo} from "../service/info";
 import styled, {keyframes} from "styled-components";
+import Logo from "../public/logo2.svg"
+import Image from "next/image";
+import {Header} from "../components/common/Header"
 
 const locatainData = [{
     name: "뚝섬",
@@ -64,16 +67,15 @@ const Home: NextPage = () => {
     }, [map, hanRiverData])
 
     return (
-        <Wrapper>
-            <div id="map"
-                 style={{width: "100vw", height: "100vh", position: "fixed", top: "0", left: "0"}}>
-            </div>
-            <div style={{display: "flex", flexDirection: "column", width: "30vw", height: "100vh", float: "right"}}>
-                <Search/>
-                <div style={{marginTop: "30px"}}/>
-                <Info/>
-            </div>
-        </Wrapper>
+        <Container>
+            <Header />
+            <MapWrapper id="map" />
+            {/*<div style={{display: "flex", flexDirection: "column", width: "30vw", height: "100vh", float: "right"}}>*/}
+            {/*    <Search/>*/}
+            {/*    <div style={{marginTop: "30px"}}/>*/}
+            {/*    <Info/>*/}
+            {/*</div>*/}
+        </Container>
 
     );
 };
@@ -95,7 +97,7 @@ const pulseAnimation = keyframes`
 `
 
 
-const Wrapper = styled.div`
+const Container = styled.div`
   width: 100vw;
   height: 100vh;
 
@@ -157,6 +159,14 @@ const Wrapper = styled.div`
     white-space: nowrap;
   }
 `
+
+const MapWrapper = styled.div`
+    width: 100vw; 
+    height: 100vh; 
+    position: fixed; 
+    margin-top: 60px;
+`;
+
 
 
 export default Home;
