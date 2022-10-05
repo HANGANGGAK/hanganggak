@@ -45,10 +45,10 @@ const Home: NextPage = () => {
 
                 const textTag = document.createElement("div")
                 textTag.innerText = data.name
-                textTag.className = "label"
+                textTag.className = "label &.selected"
 
                 const pulseTag = document.createElement("div")
-                pulseTag.className = `pulse ${hanRiverData[data.name].congestionMessage}`
+                pulseTag.className = `pulse ${hanRiverData[data.name].congestionMessage === "매우 붐빔" ? "매우붐빔" : hanRiverData[data.name].congestionMessage}`
                 pulseTag.appendChild(textTag)
 
 
@@ -58,7 +58,6 @@ const Home: NextPage = () => {
                 // });
 
               pulseTag.addEventListener('click', () => {
-                console.log(data.name)
                 queryClient.setQueryData("search", data.name)
               });
 
@@ -78,14 +77,10 @@ const Home: NextPage = () => {
         <Container>
             <Header />
             <MapWrapper id="map" />
+            {/*<CommercialWrapper />*/}
             <DataWrapper>
-                {/*<Search/>*/}
-                {/* <div style={{marginTop: "30px"}}/>*/}
-                <Info/>
+              <Info/>
             </DataWrapper>
-            {/*<div style={{display: "flex", flexDirection: "column", width: "30vw", height: "100vh", float: "right"}}>*/}
-            {/*
-            {/*</div>*/}
         </Container>
 
     );
@@ -111,9 +106,6 @@ const pulseAnimation = keyframes`
 const Container = styled.div`
   width: 100vw;
   height: auto;
-    
-  //display: flex;
-  //flex-direction: column;
 
   .pulse {
     border-radius: 50%;
@@ -123,7 +115,7 @@ const Container = styled.div`
     left: 80%;
     top: 50%;
     margin: 11px 0px 0px -12px;
-    transform: rotateX(55deg);
+    //transform: rotateX(55deg);
     z-index: -2;
 
     :after {
@@ -156,7 +148,16 @@ const Container = styled.div`
     }
   }
 
-  .혼잡 {
+
+  .붐빔 {
+    background: #FF8040;
+
+    :after {
+      box-shadow: 0 0 1px 2px darkorange;
+    }
+  }
+  
+  .매우붐빔 {
     background: rgba(255, 0, 0, 0.4);
 
     :after {
@@ -166,24 +167,46 @@ const Container = styled.div`
 
   .label {
     position: absolute;
-    top: -25px;
+    top: -35px;
     left: -8px;
-    color: #111111;
+    color: #000;
     font-weight: bold;
     white-space: nowrap;
+
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px solid #25527a;
+    
+    :hover {
+      background-color: #25527a;
+      color: #fff
+    }
+
+    .selected {
+      background-color: #25527a;
+      color: #fff
+    }
   }
 `
 
 const MapWrapper = styled.div`
     width: 100vw; 
-    height: 50vh; 
+    height: 40vh; 
     //position: fixed; 
     margin-top: 60px;
 `;
 
 const DataWrapper = styled.div`
+  margin-top: 10px;
     width: 100vw;
     height: 100%;
+`;
+
+const CommercialWrapper = styled.div`
+  width: 100%;
+  height: 50px;
+  background-color: #d2d2d2;
 `;
 
 export default Home;
