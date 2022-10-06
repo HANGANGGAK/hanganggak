@@ -6,6 +6,10 @@ import React from "react";
 import Overlay from "ol/Overlay";
 import {useHanRiverInfo} from "../service/info";
 import styled, {keyframes} from "styled-components";
+import Logo from "../public/logo2.svg"
+import Image from "next/image";
+import {Header} from "../components/common/Header"
+import {useQueryClient} from "react-query";
 
 const locatainData = [{
     name: "뚝섬",
@@ -30,7 +34,8 @@ const locatainData = [{
 ]
 
 const Home: NextPage = () => {
-    const {map} = React.useContext(MapContext);
+  const queryClient = useQueryClient();
+  const {map} = React.useContext(MapContext);
     const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
 
 
@@ -40,10 +45,10 @@ const Home: NextPage = () => {
 
                 const textTag = document.createElement("div")
                 textTag.innerText = data.name
-                textTag.className = "label"
+                textTag.className = "label &.selected"
 
                 const pulseTag = document.createElement("div")
-                pulseTag.className = `pulse ${hanRiverData[data.name].congestionMessage}`
+                pulseTag.className = `pulse ${hanRiverData[data.name].congestionMessage === "매우 붐빔" ? "매우붐빔" : hanRiverData[data.name].congestionMessage}`
                 pulseTag.appendChild(textTag)
 
 
@@ -51,6 +56,11 @@ const Home: NextPage = () => {
                 //     position: data.position,
                 //     element: textTag,
                 // });
+
+              pulseTag.addEventListener('click', () => {
+                queryClient.setQueryData("search", data.name)
+              });
+
                 const pulseMarker = new Overlay({
                     position: [data.position[0], data.position[1]],
                     element: pulseTag,
@@ -64,16 +74,14 @@ const Home: NextPage = () => {
     }, [map, hanRiverData])
 
     return (
-        <Wrapper>
-            <div id="map"
-                 style={{width: "100vw", height: "100vh", position: "fixed", top: "0", left: "0"}}>
-            </div>
-            <div style={{display: "flex", flexDirection: "column", width: "30vw", height: "100vh", float: "right"}}>
-                <Search/>
-                <div style={{marginTop: "30px"}}/>
-                <Info/>
-            </div>
-        </Wrapper>
+        <Container>
+            <Header />
+            <MapWrapper id="map" />
+            {/*<CommercialWrapper />*/}
+            <DataWrapper>
+              <Info/>
+            </DataWrapper>
+        </Container>
 
     );
 };
@@ -95,9 +103,11 @@ const pulseAnimation = keyframes`
 `
 
 
-const Wrapper = styled.div`
+const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: auto;
+  padding-bottom: 30px;
+  padding-top: 60px;
 
   .pulse {
     border-radius: 50%;
@@ -107,7 +117,7 @@ const Wrapper = styled.div`
     left: 80%;
     top: 50%;
     margin: 11px 0px 0px -12px;
-    transform: rotateX(55deg);
+    //transform: rotateX(55deg);
     z-index: -2;
 
     :after {
@@ -140,7 +150,16 @@ const Wrapper = styled.div`
     }
   }
 
-  .혼잡 {
+
+  .붐빔 {
+    background: #FF8040;
+
+    :after {
+      box-shadow: 0 0 1px 2px darkorange;
+    }
+  }
+  
+  .매우붐빔 {
     background: rgba(255, 0, 0, 0.4);
 
     :after {
@@ -150,13 +169,46 @@ const Wrapper = styled.div`
 
   .label {
     position: absolute;
-    top: -25px;
+    top: -35px;
     left: -8px;
-    color: #111111;
+    color: #000;
     font-weight: bold;
     white-space: nowrap;
+
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 5px;
+    border: 2px solid #25527a;
+    
+    :hover {
+      background-color: #25527a;
+      color: #fff
+    }
+
+    .selected {
+      background-color: #25527a;
+      color: #fff
+    }
   }
 `
 
+const MapWrapper = styled.div`
+    width: 100vw; 
+    height: 40vh; 
+    //position: fixed; 
+    //margin-top: 60px;
+`;
+
+const DataWrapper = styled.div`
+  margin-top: 10px;
+    width: 100vw;
+    height: 100%;
+`;
+
+const CommercialWrapper = styled.div`
+  width: 100%;
+  height: 50px;
+  background-color: #d2d2d2;
+`;
 
 export default Home;

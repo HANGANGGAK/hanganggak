@@ -12,7 +12,7 @@ const queryClient = new QueryClient()
 function MyApp({ Component, pageProps }: AppProps) {
   return (
       <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={true}/>
+        {/*<ReactQueryDevtools initialIsOpen={true}/>*/}
         <Map>
           <Component {...pageProps} />
         </Map>
