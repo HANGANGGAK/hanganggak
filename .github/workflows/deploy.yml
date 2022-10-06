@@ -1,20 +1,19 @@
 name: Deploy # Workflow 이름
-on: # Event 감지
+on: 
   push:
     branches:
-      - main # 메인 브랜치의 푸쉬가 일어날 때 CI/CD를 진행하겠다는 뜻
+      - main 
 jobs: # Job 설정
-  build:
-	# 내 EC2는 CentOS라서 바꿔야 할 것 같지만, 여기는 아래 상태로 둔다. 
+  build: 
     runs-on: ubuntu-latest
     env:
         working-directory: ./client
     steps:
       - name: Checkout source code. # Repo checkout
         uses: actions/checkout@v2
-      - name: Check Node v # Node v 확인
+      - name: Check Node v 
         run: node -v
-      - name: Install Dependencies # 의존 파일 설치
+      - name: Install Dependencies 
         run: yarn install --frozen-lockfile
         working-directory: ${{ env.working-directory }}
       - name: Build # React Build
@@ -24,7 +23,6 @@ jobs: # Job 설정
         run: npm run export
         working-directory: ${{ env.working-directory }}
       - name: zip create 
-# zip 파일을 만듭니다(파일명은 자유, 대신 아래 workflow에 적을 파일명과 동일하게 맞춰주세요).
         run: zip -qq -r ./build.zip
         working-directory: ${{ env.working-directory }}
         shell: bash
@@ -39,10 +37,10 @@ jobs: # Job 설정
           AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
         run: |
-          aws s3 cp --region ap-northeast-2 **./build-fe.zip** s3://**S3버킷이름/S3에서-업로드하고자-하는-폴더**/**build-fe.zip**
+          aws s3 cp --region ap-northeast-2 ./build.zip s3://hanganggak-client-deploy/./build.zip
       - name: Deploy # Deploy to EC2
         run: aws deploy create-deployment
-          --application-name **여기에 생성한-코드디플로이-애플리케이션-이름을 써주세요**
+          --application-name hanganggak-client
           --deployment-config-name CodeDeployDefault.AllAtOnce
-          --deployment-group-name **여기에 코드디플로이에서-생성한-그룹명을-써주세요**
-          --s3-location bucket=**S3버킷이름**,key=**S3에서-업로드하고자-하는-폴더**/**build-fe.zip**,bundleType=zip
+          --deployment-group-name hanganggak-client
+          --s3-location bucket=hanganggak-client-deploy,key=./build.zip,bundleType=zip
