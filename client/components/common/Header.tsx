@@ -6,12 +6,9 @@ import {HeadMeta} from "./HeadMeta";
 
 export const Header = () => {
     return (
-        <>
-            <HeadMeta />
-            <Wrapper>
-                <Image src={Logo} alt="한강각 로고" width={200} height={50} />
-            </Wrapper>
-        </>
+      <Wrapper>
+          <Image src={Logo} alt="한강각 로고" width={200} height={50} />
+      </Wrapper>
     )
 }
 
@@ -22,9 +19,11 @@ const Wrapper = styled.div`
   justify-content: center;
   padding: 10px 0;
   height: 60px;
-  background-color: white;
-  left: 0;
+  background: white;
   top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
   
   .logo {
     width: 150px;
