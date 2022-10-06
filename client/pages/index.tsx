@@ -10,7 +10,6 @@ import Logo from "../public/logo2.svg"
 import Image from "next/image";
 import {Header} from "../components/common/Header"
 import {useQueryClient} from "react-query";
-import {HeadMeta} from "../components/common/HeadMeta";
 
 const locatainData = [{
     name: "뚝섬",
@@ -76,7 +75,6 @@ const Home: NextPage = () => {
 
     return (
         <Container>
-          <HeadMeta />
             <Header />
             <MapWrapper id="map" />
             {/*<CommercialWrapper />*/}
@@ -108,8 +106,8 @@ const pulseAnimation = keyframes`
 const Container = styled.div`
   width: 100vw;
   height: auto;
-  padding-top: 70px;
   padding-bottom: 30px;
+  padding-top: 60px;
 
   .pulse {
     border-radius: 50%;
@@ -196,16 +194,15 @@ const Container = styled.div`
 
 const MapWrapper = styled.div`
     width: 100vw; 
-    height: 40vh;
-  background-color: white;
-
+    height: 40vh; 
+    //position: fixed; 
+    //margin-top: 60px;
 `;
 
 const DataWrapper = styled.div`
   margin-top: 10px;
     width: 100vw;
     height: 100%;
-  background-color: white;
 `;
 
 const CommercialWrapper = styled.div`
