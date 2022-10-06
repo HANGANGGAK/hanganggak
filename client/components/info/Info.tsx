@@ -82,6 +82,9 @@ const Info = () => {
                  <span className="icon">
                    {day.강수량 !== null && day.하늘상태 === "흐림" && "🌧"}
                  </span>
+                 <span className="icon">
+                   {day.하늘상태 === "맑음" && "☀️"}
+                 </span>
                  <span>기온 <b>{day.기온}°</b></span>
                 <span><b>{day.예보시간.toString().slice(8, -2)}:00</b></span>
                </div>
@@ -101,7 +104,8 @@ const Info = () => {
                     </>
                 }
                 <br />
-                  주로 <b>{hanRiverData.roadTraffic.전체도로소통평균현황}</b>하고 있고
+                  주로 <b>{hanRiverData.roadTraffic.전체도로소통평균현황}</b>하고
+                { hanRiverData.roadTraffic.전체도로소통평균현황 === "서행" ? "있고" : " "}
                   평균 속도는 <b>{hanRiverData.roadTraffic.전체도로소통평균속도}</b>km 에요
               </div>
           </Card>
