@@ -78,7 +78,7 @@ const Home: NextPage = () => {
 
     return (
       <>
-      <HeadMeta title={search}/>
+      {/*<HeadMeta title={search}/>*/}
         <Container>
             <Header />
             <MapWrapper id="map" />
