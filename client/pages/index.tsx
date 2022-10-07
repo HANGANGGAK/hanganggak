@@ -9,7 +9,8 @@ import styled, {keyframes} from "styled-components";
 import Logo from "../public/logo2.svg"
 import Image from "next/image";
 import {Header} from "../components/common/Header"
-import {useQueryClient} from "react-query";
+import {useQuery, useQueryClient} from "react-query";
+import {HeadMeta} from "../components/common/HeadMeta";
 
 const locatainData = [{
     name: "뚝섬",
@@ -36,8 +37,10 @@ const locatainData = [{
 const Home: NextPage = () => {
   const queryClient = useQueryClient();
   const {map} = React.useContext(MapContext);
-    const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
-
+  const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
+  const { data: search } = useQuery<string>('search',() => '', {
+    staleTime: Infinity,
+  });
 
     React.useEffect(() => {
         if (map && hanRiverData) {
@@ -74,6 +77,8 @@ const Home: NextPage = () => {
     }, [map, hanRiverData])
 
     return (
+      <>
+      <HeadMeta title={search}/>
         <Container>
             <Header />
             <MapWrapper id="map" />
@@ -82,6 +87,7 @@ const Home: NextPage = () => {
               <Info/>
             </DataWrapper>
         </Container>
+      </>
 
     );
 };
