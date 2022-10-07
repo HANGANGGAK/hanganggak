@@ -18,7 +18,6 @@ export const HeadMeta = ({ title, description, url }: IMetaType) => {
                 }
             />
             <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-            <meta name="naver-site-verification" content="5b045220e7c350ae41da983b04db4c5b033758df" />
             <meta property="og:title" content={`한강각 ${ title !== "" ? ` || ${title} 한강공원` : ""}`} />
             <meta property="og:type" content="website" />
             <meta property="og:url" content={url || "http://hanganggak.site"} />
@@ -35,6 +34,7 @@ export const HeadMeta = ({ title, description, url }: IMetaType) => {
           <meta name="twitter:image" content="https://github.com/HANGANGGAK/hanganggak/blob/dev/client/public/logo.png?raw=true" />
           <meta name="twitter:site" content="http://hanganggak.site" />
           <meta http-equiv="Copyright" content="hanganggak@gmail.com" />
+          <meta name="naver-site-verification" content="5b045220e7c350ae41da983b04db4c5b033758df" />
         </Head>
     );
 };
