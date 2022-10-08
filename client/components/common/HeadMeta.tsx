@@ -20,6 +20,7 @@ export const HeadMeta = ({  description, url }: IMetaType) => {
                     `한강각, 한강, 한강공원, 불꽃축제, 잠실, 뚝섬, 반포, 이촌, 여의도 한강공원, 한강간맥, 한강 날씨, 뚝섬유원지, 한강치맥`
                 }
             />
+            <link rel="canonical" href="http://hanganggak.site/" />
             <meta name="viewport" content="initial-scale=1.0, width=device-width" />
             <meta property="og:title" content={`한강각 ${ title !== "" ? ` || ${title} 한강공원` : ""}`} />
             <meta property="og:type" content="website" />
