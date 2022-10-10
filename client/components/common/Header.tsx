@@ -2,13 +2,12 @@ import styled from "styled-components";
 import Image from "next/image";
 import Logo from "../../public/logo2.svg";
 import React from "react";
-import {HeadMeta} from "./HeadMeta";
 
 export const Header = () => {
     return (
-      <Wrapper>
-          <Image src={Logo} alt="한강각 로고" width={200} height={50} />
-      </Wrapper>
+        <Wrapper>
+            <Image src={Logo} alt="한강각 로고" width={200} height={50}/>
+        </Wrapper>
     )
 }
 
@@ -24,7 +23,7 @@ const Wrapper = styled.div`
   left: 0;
   right: 0;
   z-index: 999;
-  
+
   .logo {
     width: 150px;
     height: 50px;

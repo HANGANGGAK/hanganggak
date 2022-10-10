@@ -1,16 +1,12 @@
 import type {NextPage} from "next";
-import Search from "../components/search/Search";
 import Info from "../components/info/Info";
 import MapContext from "../components/map/mapContext";
 import React from "react";
 import Overlay from "ol/Overlay";
 import {useHanRiverInfo} from "../service/info";
 import styled, {keyframes} from "styled-components";
-import Logo from "../public/logo2.svg"
-import Image from "next/image";
 import {Header} from "../components/common/Header"
 import {useQuery, useQueryClient} from "react-query";
-import {HeadMeta} from "../components/common/HeadMeta";
 
 const locatainData = [{
     name: "뚝섬",
@@ -35,12 +31,12 @@ const locatainData = [{
 ]
 
 const Home: NextPage = () => {
-  const queryClient = useQueryClient();
-  const {map} = React.useContext(MapContext);
-  const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
-  const { data: search } = useQuery<string>('search',() => '', {
-    staleTime: Infinity,
-  });
+    const queryClient = useQueryClient();
+    const {map} = React.useContext(MapContext);
+    const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
+    const {data: search} = useQuery<string>('search', () => '', {
+        staleTime: Infinity,
+    });
 
     React.useEffect(() => {
         if (map && hanRiverData) {
@@ -60,9 +56,9 @@ const Home: NextPage = () => {
                 //     element: textTag,
                 // });
 
-              pulseTag.addEventListener('click', () => {
-                queryClient.setQueryData("search", data.name)
-              });
+                pulseTag.addEventListener('click', () => {
+                    queryClient.setQueryData("search", data.name)
+                });
 
                 const pulseMarker = new Overlay({
                     position: [data.position[0], data.position[1]],
@@ -77,17 +73,17 @@ const Home: NextPage = () => {
     }, [map, hanRiverData])
 
     return (
-      <>
-      {/*<HeadMeta title={search}/>*/}
-        <Container>
-            <Header />
-            <MapWrapper id="map" />
-            {/*<CommercialWrapper />*/}
-            <DataWrapper>
-              <Info/>
-            </DataWrapper>
-        </Container>
-      </>
+        <>
+            {/*<HeadMeta title={search}/>*/}
+            <Container>
+                <Header/>
+                <MapWrapper id="map"/>
+                {/*<CommercialWrapper />*/}
+                <DataWrapper>
+                    <Info/>
+                </DataWrapper>
+            </Container>
+        </>
 
     );
 };
@@ -164,7 +160,7 @@ const Container = styled.div`
       box-shadow: 0 0 1px 2px darkorange;
     }
   }
-  
+
   .매우붐빔 {
     background: rgba(255, 0, 0, 0.4);
 
@@ -185,7 +181,7 @@ const Container = styled.div`
     border-radius: 10px;
     padding: 5px;
     border: 2px solid #25527a;
-    
+
     :hover {
       background-color: #25527a;
       color: #fff
@@ -199,16 +195,16 @@ const Container = styled.div`
 `
 
 const MapWrapper = styled.div`
-    width: 100vw; 
-    height: 40vh; 
-    //position: fixed; 
-    //margin-top: 60px;
+  width: 100vw;
+  height: 40vh;
+  //position: fixed; 
+  //margin-top: 60px;
 `;
 
 const DataWrapper = styled.div`
   margin-top: 10px;
-    width: 100vw;
-    height: 100%;
+  width: 100vw;
+  height: 100%;
 `;
 
 const CommercialWrapper = styled.div`
