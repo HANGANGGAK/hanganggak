@@ -5,6 +5,8 @@ import {QueryClient, QueryClientProvider, useQuery} from "react-query";
 import React from "react";
 import {ReactQueryDevtools} from "react-query/devtools";
 import {HeadMeta} from "../components/common/HeadMeta";
+import {useHanRiverInfo} from "../service/info";
+import Detail from "./[search]";
 
 const Map = dynamic(() => import("../components/map"), { ssr: false });
 
@@ -18,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Map>
           <Component {...pageProps} />
         </Map>
+        <Detail />
       </QueryClientProvider>
   );
 }

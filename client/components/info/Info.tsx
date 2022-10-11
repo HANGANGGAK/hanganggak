@@ -1,20 +1,15 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React from "react";
 import {useHanRiverInfo} from "../../service/info";
-import {useQuery} from "react-query";
 import styled from "styled-components";
 
-const Info = () => {
-  const { data: search } = useQuery<string>('search',() => '', {
-    staleTime: Infinity,
-  });
-  const {isError, isLoading, data: hanRiverData} = useHanRiverInfo(search)
-  const [dayWeather, setDayWeahter] = React.useState({});
+const Info = ({ query }: { query: any }) => {
+  const {isError, isLoading, data: hanRiverData} = useHanRiverInfo(query)
 
   return (
     <Wrapper>
       {isLoading && <>로딩 중 입니다.</>}
       {isError && <>에러가 발생했습니다.</>}
-      {search && hanRiverData &&
+      {query && hanRiverData &&
         <>
           <Card>
             <div className="title">
@@ -49,8 +44,8 @@ const Info = () => {
                       <div className="spaceBetween">
                         <span>최저온도 <b>{hanRiverData.liveWeather.최저온도}°</b></span> |
                         <span>최고온도 <b>{hanRiverData.liveWeather.최고온도}°</b></span> |
-                        <span>미세먼지 <b>{hanRiverData.liveWeather['미세먼지지표(10)']}</b></span> |
-                        <span>초미세먼지 <b>{hanRiverData.liveWeather['초미세먼지지표(25)']}</b></span>
+                        <span>미세먼지 <b>{hanRiverData.liveWeather['미세먼지지표(10)'] === "점검중" ? "-" : hanRiverData.liveWeather['미세먼지지표(10)']}</b></span> |
+                        <span>초미세먼지 <b>{hanRiverData.liveWeather['초미세먼지지표(25)'] === "점검중" ? "-" : hanRiverData.liveWeather['초미세먼지지표(25)']}</b></span>
                       </div>
                       <br />
                       <div style={{ fontWeight: 500 }}> ☔️ {hanRiverData.liveWeather.강수관련메시지.split(".")[0]}</div>

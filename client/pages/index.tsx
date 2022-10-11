@@ -7,6 +7,7 @@ import {useHanRiverInfo} from "../service/info";
 import styled, {keyframes} from "styled-components";
 import {Header} from "../components/common/Header"
 import {useQuery, useQueryClient} from "react-query";
+import {useRouter} from "next/router";
 
 const locatainData = [{
     name: "뚝섬",
@@ -37,6 +38,7 @@ const Home: NextPage = () => {
   const { data: search } = useQuery<string>('search',() => '', {
     staleTime: Infinity,
   });
+  const router = useRouter()
 
     React.useEffect(() => {
         if (map && hanRiverData) {
@@ -57,7 +59,9 @@ const Home: NextPage = () => {
                 // });
 
               pulseTag.addEventListener('click', () => {
-                queryClient.setQueryData("search", data.name)
+                queryClient.setQueryData("search", data.name);
+                console.log(data.name)
+                router.push({pathname: '/', query: {search: data.name}},`/${data.name}`);
               });
 
                 const pulseMarker = new Overlay({
@@ -79,9 +83,9 @@ const Home: NextPage = () => {
             <Header />
             <MapWrapper id="map" />
             {/*<CommercialWrapper />*/}
-            <DataWrapper>
-              <Info/>
-            </DataWrapper>
+            {/*<DataWrapper>*/}
+            {/*  <Info/>*/}
+            {/*</DataWrapper>*/}
         </Container>
       </>
 
@@ -198,13 +202,11 @@ const MapWrapper = styled.div`
     width: 100vw; 
     height: 40vh; 
     //position: fixed; 
+    //z-index: 999;
+    //top: 60px;
+    //left: 0;
+    //bottom: 0;
     //margin-top: 60px;
-`;
-
-const DataWrapper = styled.div`
-  margin-top: 10px;
-    width: 100vw;
-    height: 100%;
 `;
 
 const CommercialWrapper = styled.div`
