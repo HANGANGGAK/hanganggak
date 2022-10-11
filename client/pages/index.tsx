@@ -1,16 +1,12 @@
 import type {NextPage} from "next";
-import Search from "../components/search/Search";
 import Info from "../components/info/Info";
 import MapContext from "../components/map/mapContext";
 import React from "react";
 import Overlay from "ol/Overlay";
 import {useHanRiverInfo} from "../service/info";
 import styled, {keyframes} from "styled-components";
-import Logo from "../public/logo2.svg"
-import Image from "next/image";
 import {Header} from "../components/common/Header"
 import {useQuery, useQueryClient} from "react-query";
-import {HeadMeta} from "../components/common/HeadMeta";
 
 const locatainData = [{
     name: "뚝섬",

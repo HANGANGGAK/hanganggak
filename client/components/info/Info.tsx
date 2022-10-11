@@ -16,7 +16,6 @@ const Info = () => {
       {isError && <>에러가 발생했습니다.</>}
       {search && hanRiverData &&
         <>
-          {/*{ hanRiverData.congestion.장소혼잡도 !== "여유" || hanRiverData.liveWeather.강수형태 === "비" ? <>한강각이 안나와요 😞</> : <>한강각 😉</>  }*/}
           <Card>
             <div className="title">
               혼잡도
@@ -32,10 +31,11 @@ const Info = () => {
             </div>
             <div className="info">
                 <WeahterCard>
-                  {hanRiverData && hanRiverData.dayWeather.slice(2, 3).map((day: any) => (
+                  {hanRiverData && hanRiverData.dayWeather.slice(0, 1).map((day: any) => (
                     <div key={day.예보시간} className={"wrapper big"}>
                       <span className="icon_big">{day.하늘상태 === "흐림" && day.강수량 === null && "☁️"}</span>
                       <span className="icon_big">{day.하늘상태 === "구름많음" && "☁️️"}</span>
+                      <span className="icon_big">{day.하늘상태 === "맑음" && "☀️"}</span>
                       <span className="icon_big">
                    {day.강수량 !== null && day.하늘상태 === "흐림" && "🌧"}
                  </span>
@@ -75,7 +75,7 @@ const Info = () => {
                 오늘의 날씨
             </div>
               <WeahterCard>
-            {hanRiverData && hanRiverData.dayWeather.slice(2, 7).map((day: any) => (
+            {hanRiverData && hanRiverData.dayWeather.slice(0, 5).map((day: any) => (
                <div key={day.예보시간} className={"wrapper"}>
                  <span className="icon">{day.하늘상태 === "흐림" && day.강수량 === null && "☁️"}</span>
                  <span className="icon">{day.하늘상태 === "구름많음" && "☁️️"}</span>
@@ -85,7 +85,7 @@ const Info = () => {
                  <span className="icon">
                    {day.하늘상태 === "맑음" && "☀️"}
                  </span>
-                 <span>기온 <b>{day.기온}°</b></span>
+                 <span><b>{day.기온}°</b></span>
                 <span><b>{day.예보시간.toString().slice(8, -2)}:00</b></span>
                </div>
             ))}

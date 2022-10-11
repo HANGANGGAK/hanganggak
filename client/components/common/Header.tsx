@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Image from "next/image";
 import Logo from "../../public/logo2.svg";
 import React from "react";
-import {HeadMeta} from "./HeadMeta";
 
 export const Header = () => {
     return (
