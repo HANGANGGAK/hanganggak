@@ -22,26 +22,31 @@ export class HanRiverService {
     });
   }
 
-  async filterData(jsonResult) {
-    // console.log(jsonResult);
+  async filterSummaryData(jsonResult) {
     const result = {};
-    // for (let i = 0; i < jsonResult.length; i++) {
-    //   const cityData = await JSON.parse(jsonResult[i].value)[
-    //     'SeoulRtd.citydata'
-    //   ]['CITYDATA'];
-    //   const placeName = cityData['AREA_NM']['_text'];
-    //   const congestionMessage =
-    //     cityData['LIVE_PPLTN_STTS']['LIVE_PPLTN_STTS']['AREA_CONGEST_LVL'][
-    //       '_text'
-    //     ];
-    //   const liveTemp =
-    //     cityData['WEATHER_STTS']['WEATHER_STTS']['TEMP']['_text'];
-    //   const sunsetTime =
-    //     cityData['WEATHER_STTS']['WEATHER_STTS']['SUNSET']['_text'];
-    //   const keyName = placeName.slice(0, 2);
-    //
-    //   result[keyName] = { placeName, congestionMessage, liveTemp, sunsetTime };
-    // }
+    for (let i = 0; i < jsonResult.length; i++) {
+      const cityData = await JSON.parse(jsonResult[i].value)[
+        'SeoulRtd.citydata'
+      ]['CITYDATA'];
+      const placeName = cityData['AREA_NM']['_text'];
+      const congestionMessage =
+        cityData['LIVE_PPLTN_STTS']['LIVE_PPLTN_STTS']['AREA_CONGEST_LVL'][
+          '_text'
+        ];
+      const liveTemp =
+        cityData['WEATHER_STTS']['WEATHER_STTS']['TEMP']['_text'];
+      const sunsetTime =
+        cityData['WEATHER_STTS']['WEATHER_STTS']['SUNSET']['_text'];
+      const keyName = placeName.slice(0, 2);
+
+      result[keyName] = { placeName, congestionMessage, liveTemp, sunsetTime };
+    }
+
+    return result;
+  }
+
+  async filterData(jsonResult) {
+    const result = {};
     for (let i = 0; i < jsonResult.length; i++) {
       const dataStatus = JSON.parse(jsonResult[i].value)['SeoulRtd.citydata'][
         'RESULT'
