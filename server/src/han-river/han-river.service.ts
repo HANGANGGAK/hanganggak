@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import convert from 'xml-js';
-import * as dotenv from 'dotenv';
 import { plainToInstance } from 'class-transformer';
 import { congestionResponse } from './responses/congestion.dto';
 import { roadTrafficResponse } from './responses/road-traffic.dto';
 import { liveWeatherResponse } from './responses/live-weather.dto';
 import { dayWeatherResponse } from './responses/day-weather.dto';
-
-dotenv.config();
 
 @Injectable()
 export class HanRiverService {

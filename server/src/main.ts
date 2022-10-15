@@ -3,9 +3,6 @@ import { AppModule } from './app.module';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import * as ip from 'ip';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
