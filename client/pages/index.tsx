@@ -1,12 +1,15 @@
 import type {NextPage} from "next";
+import Overlay from "ol/Overlay";
+import React from "react";
+import {useQueryClient} from "react-query";
+import styled, {keyframes} from "styled-components";
+import Header from "../components/common/Header"
 import Info from "../components/info/Info";
 import MapContext from "../components/map/mapContext";
-import React from "react";
-import Overlay from "ol/Overlay";
 import {useHanRiverInfo} from "../service/info";
-import styled, {keyframes} from "styled-components";
-import {Header} from "../components/common/Header"
-import {useQuery, useQueryClient} from "react-query";
+import {useModal} from "../stores/modal";
+import {useMapInfoStore} from "../stores/mapInfo";
+import Loading from "../components/common/Loading";
 
 const locatainData = [{
     name: "뚝섬",
@@ -24,19 +27,15 @@ const locatainData = [{
     name: "잠실",
     position: [1233.3108189961722, 433.73792151037173]
 },
-//     {
-//     name: "여의도",
-//     position: [789.4961078458748, 461.9891656283356]
-// },
+
 ]
 
 const Home: NextPage = () => {
+    const {isOpen, setIsOpen} = useModal()
+    const {setMapInfo} = useMapInfoStore()
     const queryClient = useQueryClient();
-    const {map} = React.useContext(MapContext);
+    const {map, data} = React.useContext(MapContext);
     const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
-    const {data: search} = useQuery<string>('search', () => '', {
-        staleTime: Infinity,
-    });
 
     React.useEffect(() => {
         if (map && hanRiverData) {
@@ -47,17 +46,12 @@ const Home: NextPage = () => {
                 textTag.className = "label &.selected"
 
                 const pulseTag = document.createElement("div")
-                pulseTag.className = `pulse ${hanRiverData[data.name].congestionMessage === "매우 붐빔" ? "매우붐빔" : hanRiverData[data.name].congestionMessage}`
+                pulseTag.className = `pulse ${hanRiverData[data.name].congestion.장소혼잡도 === "매우 붐빔" ? "매우붐빔" : hanRiverData[data.name].congestion.장소혼잡도}`
                 pulseTag.appendChild(textTag)
 
-
-                // const textMarker = new Overlay({
-                //     position: data.position,
-                //     element: textTag,
-                // });
-
                 pulseTag.addEventListener('click', () => {
-                    queryClient.setQueryData("search", data.name)
+                    setMapInfo(hanRiverData[data.name])
+                    setIsOpen()
                 });
 
                 const pulseMarker = new Overlay({
@@ -70,18 +64,26 @@ const Home: NextPage = () => {
 
             })
         }
-    }, [map, hanRiverData])
+    }, [hanRiverData])
 
     return (
         <>
-            {/*<HeadMeta title={search}/>*/}
             <Container>
                 <Header/>
-                <MapWrapper id="map"/>
-                {/*<CommercialWrapper />*/}
-                <DataWrapper>
-                    <Info/>
-                </DataWrapper>
+                <MapWrapper id={"map"}/>
+                {
+                    isOpen &&
+                    <DataWrapper>
+                        <Info/>
+                    </DataWrapper>
+                }
+                {
+                    (isLoading && hanRiverData === undefined) &&
+                    <CircleContainer>
+                        <Loading/>
+                    </CircleContainer>
+                }
+
             </Container>
         </>
 
@@ -104,8 +106,8 @@ const pulseAnimation = keyframes`
   }
 `
 
-
 const Container = styled.div`
+  position: relative;
   width: 100vw;
   height: auto;
   padding-bottom: 30px;
@@ -196,21 +198,63 @@ const Container = styled.div`
 
 const MapWrapper = styled.div`
   width: 100vw;
-  height: 40vh;
-  //position: fixed; 
-  //margin-top: 60px;
+  height: 100vh;
 `;
 
 const DataWrapper = styled.div`
   margin-top: 10px;
-  width: 100vw;
+  width: 30vw;
   height: 100%;
+  background: #fff;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: auto;
+
+  @media (max-width: 800px) {
+    width: 100%;
+    padding-bottom: 40px;
+  }
+
 `;
 
-const CommercialWrapper = styled.div`
+const CircleContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  transition-duration: 4s;
+
   width: 100%;
-  height: 50px;
-  background-color: #d2d2d2;
-`;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .loading {
+    border: 1px solid red;
+    width: 60px;
+    height: 60px;
+    position: relative;
+  }
+
+  .loading span {
+    position: absolute;
+    text-transform: uppercase;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .circle {
+    border: 5px solid #000;
+    width: inherit;
+    height: inherit;
+    border-radius: 50%;
+  }
+`
 
 export default Home;

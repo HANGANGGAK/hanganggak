@@ -3,7 +3,7 @@ import Image from "next/image";
 import Logo from "../../public/logo2.svg";
 import React from "react";
 
-export const Header = () => {
+const Header = () => {
     return (
         <Wrapper>
             <Image src={Logo} alt="한강각 로고" width={200} height={50}/>
@@ -29,3 +29,5 @@ const Wrapper = styled.div`
     height: 50px;
   }
 `;
+
+export default React.memo(Header)

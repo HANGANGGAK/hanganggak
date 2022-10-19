@@ -7,9 +7,11 @@ import Projection from 'ol/proj/Projection';
 import ImageLayer from "ol/layer/Image";
 import Static from 'ol/source/ImageStatic';
 import {getCenter} from "ol/extent";
+import {useHanRiverInfo} from "../../service/info";
 
 const Map = ({children}: { children: React.ReactNode }) => {
-    const [mapObj, setMapObj] = useState<{ map?: OlMap }>({map: undefined});
+    const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
+    const [mapObj, setMapObj] = useState<{ map?: OlMap; data?: any }>({map: undefined, data: undefined});
     const extent = [0, 0, 1920, 1080];
 
 
@@ -40,7 +42,7 @@ const Map = ({children}: { children: React.ReactNode }) => {
         });
 
 
-        setMapObj({map});
+        setMapObj((prev) => ({...prev, map}));
 
         return () => map.setTarget(undefined);
     }, []);
@@ -49,4 +51,4 @@ const Map = ({children}: { children: React.ReactNode }) => {
     return <MapContext.Provider value={mapObj}>{children}</MapContext.Provider>;
 };
 
-export default Map;
+export default React.memo(Map);

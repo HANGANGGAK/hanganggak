@@ -1,11 +1,12 @@
 import "../styles/globals.css";
 import type {AppProps} from "next/app";
-import dynamic from "next/dynamic";
 import {QueryClient, QueryClientProvider} from "react-query";
 import React from "react";
 import {HeadMeta} from "../components/common/HeadMeta";
+import dynamic from "next/dynamic";
 
 const Map = dynamic(() => import("../components/map"), {ssr: false});
+
 
 const queryClient = new QueryClient()
 

@@ -1,0 +1,1 @@
+import create from 'zustand'interface IModalStoreProps {    isOpen: boolean;    setIsOpen: () => void;    setIsClose: () => void;}export const useModal = create<IModalStoreProps>((set) => ({    isOpen: false,    setIsOpen: () => set(() => ({isOpen: true})),    setIsClose: () => set(() => ({isOpen: false}))}))
