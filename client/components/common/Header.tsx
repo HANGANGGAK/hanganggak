@@ -4,12 +4,12 @@ import Logo from "../../public/logo2.svg";
 import React from "react";
 
 const Header = () => {
-    return (
-        <Wrapper>
-            <Image src={Logo} alt="한강각 로고" width={200} height={50}/>
-        </Wrapper>
-    )
-}
+  return (
+    <Wrapper>
+      <Image src={Logo} alt="한강각 로고" width={200} height={50} />
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,4 +30,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default React.memo(Header)
+export default React.memo(Header);
