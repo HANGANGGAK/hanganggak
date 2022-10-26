@@ -14,6 +14,11 @@ export const HeadMeta = ({ url }: IMetaType) => {
   const content = title !== "" ? `한강각  || ${title} 한강공원` : "한강각";
   return (
     <Head>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3899838752875465"
+        crossOrigin="anonymous"
+      ></script>
       <title>{content}</title>
       <meta
         name="description"
