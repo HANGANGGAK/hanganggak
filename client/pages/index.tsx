@@ -1,93 +1,105 @@
-import type {NextPage} from "next";
+import type { NextPage } from "next";
 import Overlay from "ol/Overlay";
 import React from "react";
-import {useQueryClient} from "react-query";
-import styled, {keyframes} from "styled-components";
-import Header from "../components/common/Header"
+import { useQueryClient } from "react-query";
+import styled, { keyframes } from "styled-components";
+import Header from "../components/common/Header";
 import Info from "../components/info/Info";
 import MapContext from "../components/map/mapContext";
-import {useHanRiverInfo} from "../service/info";
-import {useModal} from "../stores/modal";
-import {useMapInfoStore} from "../stores/mapInfo";
+import { useHanRiverInfo } from "../service/info";
+import { useModal } from "../stores/modal";
+import { useMapInfoStore } from "../stores/mapInfo";
 import Loading from "../components/common/Loading";
+import Logo3 from "../public/logo3.svg";
+import { useMediaQuery } from "react-responsive";
 
-const locatainData = [{
+const locatainData = [
+  {
     name: "뚝섬",
-    position: [1202.5006305099564, 491.5764799331531]
-}, {
+    position: [1202.5006305099564, 491.5764799331531],
+  },
+  {
     name: "망원",
-    position: [692.3623600395065, 536.6586097266725]
-}, {
+    position: [692.3623600395065, 536.6586097266725],
+  },
+  {
     name: "반포",
     position: [993.5182717037145, 386.47984955370583],
-}, {
+  },
+  {
     name: "이촌",
-    position: [886.9668608547381, 395.89365001267686]
-}, {
+    position: [886.9668608547381, 395.89365001267686],
+  },
+  {
     name: "잠실",
-    position: [1233.3108189961722, 433.73792151037173]
-},
-
-]
+    position: [1233.3108189961722, 433.73792151037173],
+  },
+];
 
 const Home: NextPage = () => {
-    const {isOpen, setIsOpen} = useModal()
-    const {setMapInfo} = useMapInfoStore()
-    const queryClient = useQueryClient();
-    const {map, data} = React.useContext(MapContext);
-    const {isError, isLoading, data: hanRiverData} = useHanRiverInfo("")
+  const { isOpen, setIsOpen } = useModal();
+  const { setMapInfo } = useMapInfoStore();
+  const queryClient = useQueryClient();
+  const { map, data } = React.useContext(MapContext);
+  const { isError, isLoading, data: hanRiverData } = useHanRiverInfo("");
+  const isDesktop = useMediaQuery({
+    query: "(min-width:801px)",
+  });
 
-    React.useEffect(() => {
-        if (map && hanRiverData) {
-            locatainData.forEach((data) => {
+  React.useEffect(() => {
+    if (map && hanRiverData) {
+      locatainData.forEach((data) => {
+        const textTag = document.createElement("div");
+        textTag.innerText = data.name;
+        textTag.className = "label &.selected";
 
-                const textTag = document.createElement("div")
-                textTag.innerText = data.name
-                textTag.className = "label &.selected"
+        const pulseTag = document.createElement("div");
+        pulseTag.className = `pulse ${
+          hanRiverData[data.name].congestion.장소혼잡도 === "매우 붐빔"
+            ? "매우붐빔"
+            : hanRiverData[data.name].congestion.장소혼잡도
+        }`;
+        pulseTag.appendChild(textTag);
 
-                const pulseTag = document.createElement("div")
-                pulseTag.className = `pulse ${hanRiverData[data.name].congestion.장소혼잡도 === "매우 붐빔" ? "매우붐빔" : hanRiverData[data.name].congestion.장소혼잡도}`
-                pulseTag.appendChild(textTag)
+        pulseTag.addEventListener("click", () => {
+          setMapInfo(hanRiverData[data.name]);
+          setIsOpen();
+        });
 
-                pulseTag.addEventListener('click', () => {
-                    setMapInfo(hanRiverData[data.name])
-                    setIsOpen()
-                });
+        const pulseMarker = new Overlay({
+          position: [data.position[0], data.position[1]],
+          element: pulseTag,
+        });
 
-                const pulseMarker = new Overlay({
-                    position: [data.position[0], data.position[1]],
-                    element: pulseTag,
-                });
+        // map.addOverlay(textMarker)
+        map.addOverlay(pulseMarker);
+      });
+    }
+  }, [hanRiverData]);
 
-                // map.addOverlay(textMarker)
-                map.addOverlay(pulseMarker)
-
-            })
-        }
-    }, [hanRiverData])
-
-    return (
-        <>
-            <Container>
-                <Header/>
-                <MapWrapper id={"map"}/>
-                {
-                    isOpen &&
-                    <DataWrapper>
-                        <Info/>
-                    </DataWrapper>
-                }
-                {
-                    (isLoading && hanRiverData === undefined) &&
-                    <CircleContainer>
-                        <Loading/>
-                    </CircleContainer>
-                }
-
-            </Container>
-        </>
-
-    );
+  return (
+    <>
+      <Container>
+        <Header />
+        <MapWrapper id={"map"} />
+        {isOpen && (
+          <DataWrapper>
+            <Info />
+          </DataWrapper>
+        )}
+        {!isOpen && !isLoading && isDesktop && (
+          <DataWrapper>
+            <div className={"none"}>✨ 한강 공원을 지도에서 선택해주세요 </div>
+          </DataWrapper>
+        )}
+        {isLoading && hanRiverData === undefined && (
+          <CircleContainer>
+            <Loading />
+          </CircleContainer>
+        )}
+      </Container>
+    </>
+  );
 };
 
 const pulseAnimation = keyframes`
@@ -104,7 +116,7 @@ const pulseAnimation = keyframes`
     transform: scale(1.2, 1.2);
     opacity: 0;
   }
-`
+`;
 
 const Container = styled.div`
   position: relative;
@@ -112,6 +124,7 @@ const Container = styled.div`
   height: auto;
   padding-bottom: 30px;
   padding-top: 60px;
+  background-color: white;
 
   .pulse {
     border-radius: 50%;
@@ -133,7 +146,7 @@ const Container = styled.div`
       margin: -13px 0 0 -13px;
       animation: ${pulseAnimation} 1s ease-out;
       animation-iteration-count: infinite;
-      opacity: 0.0;
+      opacity: 0;
       animation-delay: 1.1s;
     }
   }
@@ -147,24 +160,23 @@ const Container = styled.div`
   }
 
   .보통 {
-    background: rgba(0, 0, 255, 0.4);
+    background: rgb(255, 177, 0);
 
     :after {
-      box-shadow: 0 0 1px 2px blue;
+      box-shadow: 0 0 1px 2px #ffb100;
     }
   }
 
-
   .붐빔 {
-    background: #FF8040;
+    background: #ff8040;
 
     :after {
-      box-shadow: 0 0 1px 2px darkorange;
+      box-shadow: 0 0 1px 2px #ff8040;
     }
   }
 
   .매우붐빔 {
-    background: rgba(255, 0, 0, 0.4);
+    background: rgb(255, 0, 0);
 
     :after {
       box-shadow: 0 0 1px 2px red;
@@ -186,19 +198,27 @@ const Container = styled.div`
 
     :hover {
       background-color: #25527a;
-      color: #fff
+      color: #fff;
     }
 
     .selected {
       background-color: #25527a;
-      color: #fff
+      color: #fff;
     }
   }
-`
+`;
 
 const MapWrapper = styled.div`
   width: 100vw;
   height: 100vh;
+
+  @media (min-width: 801px) {
+    width: 70%;
+  }
+
+  .none {
+    background-color: red;
+  }
 `;
 
 const DataWrapper = styled.div`
@@ -212,11 +232,23 @@ const DataWrapper = styled.div`
   left: 0;
   overflow: auto;
 
+  .none {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+  }
+
   @media (max-width: 800px) {
     width: 100%;
     padding-bottom: 40px;
   }
 
+  @media (min-width: 801px) {
+    width: 30%;
+    left: 70%;
+    padding-top: 60px;
+  }
 `;
 
 const CircleContainer = styled.div`
@@ -255,6 +287,6 @@ const CircleContainer = styled.div`
     height: inherit;
     border-radius: 50%;
   }
-`
+`;
 
 export default Home;
