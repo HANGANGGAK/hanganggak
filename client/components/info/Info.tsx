@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useMapInfoStore } from "../../stores/mapInfo";
 import { useModal } from "../../stores/modal";
 import CloseIcon from "../../assets/cancel.png";
+import CrossIcon from "../../assets/Cross.png";
+
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 
@@ -10,7 +12,6 @@ const Info = () => {
   const { info: hanRiverData } = useMapInfoStore();
   const [dayWeather, setDayWeahter] = React.useState({});
   const { setIsClose } = useModal();
-  // const search = Reclil;
 
   const isDesktop = useMediaQuery({
     query: "(min-width:801px)",
@@ -28,7 +29,7 @@ const Info = () => {
           <div className={"title"}>{hanRiverData.placeName}</div>
           {isMobile && (
             <Image
-              src={CloseIcon}
+              src={CrossIcon}
               width={15}
               height={15}
               onClick={setIsClose}
