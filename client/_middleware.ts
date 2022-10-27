@@ -1,6 +1,6 @@
 import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
 
-export function middleware(req: NextRequest, ev: NextFetchEvent) {
+export function _middleware(req: NextRequest, ev: NextFetchEvent) {
   console.log(req.headers);
 
   if (req.headers.get("x-forwarded-proto") !== "https") {
