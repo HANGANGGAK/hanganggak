@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { QueryClient, QueryClientProvider } from "react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { HeadMeta } from "../components/common/HeadMeta";
 import dynamic from "next/dynamic";
 import Script from "next/script";
