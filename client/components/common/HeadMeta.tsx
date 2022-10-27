@@ -61,21 +61,6 @@ export const HeadMeta = ({ url }: IMetaType) => {
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3899838752875465"
         crossOrigin="anonymous"
       />
-      <Script>
-        if (window.location.protocol != "https:"){" "}
-        {
-          (window.location.href =
-            "https:" +
-            window.location.href.substring(window.location.protocol.length))
-        }
-        if (document.location.protocol == 'http:'){" "}
-        {
-          (document.location.href = document.location.href.replace(
-            "http:",
-            "https:"
-          ))
-        }
-      </Script>
     </>
   );
 };
