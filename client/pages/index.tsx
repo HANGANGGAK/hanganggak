@@ -12,6 +12,7 @@ import { useMapInfoStore } from "../stores/mapInfo";
 import Loading from "../components/common/Loading";
 import Logo3 from "../public/logo3.svg";
 import { useMediaQuery } from "react-responsive";
+import { Notice } from "../components/common/Notice";
 
 const locatainData = [
   {
@@ -89,7 +90,8 @@ const Home: NextPage = () => {
         )}
         {!isOpen && !isLoading && isDesktop && (
           <DataWrapper>
-            <div className={"none"}>✨ 한강 공원을 지도에서 선택해주세요 </div>
+            <h2 className={"text"}>📍 한강 공원을 지도에서 선택해주세요 📍</h2>
+            <Notice />
           </DataWrapper>
         )}
         {isLoading && hanRiverData === undefined && (
@@ -232,11 +234,10 @@ const DataWrapper = styled.div`
   left: 0;
   overflow: auto;
 
-  .none {
+  .text {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1rem;
   }
 
   @media (max-width: 800px) {
