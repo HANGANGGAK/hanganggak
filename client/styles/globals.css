@@ -15,12 +15,24 @@ a {
   box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
+/*@media (prefers-color-scheme: dark) {*/
+/*  !*html {*!*/
+/*  !*  color-scheme: white;*!*/
+/*  !*}*!*/
+/*  body {*/
+/*    color: white;*/
+/*    background: black;*/
+/*  }*/
+
+/*  h1,*/
+/*  h2,*/
+/*  h3,*/
+/*  h4,*/
+/*  ul,*/
+/*  ol,*/
+/*  li,*/
+/*  div,*/
+/*  span {*/
+/*    color: #000;*/
+/*  }*/
+/*}*/
