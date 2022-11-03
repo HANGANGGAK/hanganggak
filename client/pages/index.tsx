@@ -13,6 +13,7 @@ import Loading from "../components/common/Loading";
 import Logo3 from "../public/logo3.svg";
 import { useMediaQuery } from "react-responsive";
 import { Notice } from "../components/common/Notice";
+import KakaoAdFit from "../components/common/KakaoAdFit";
 
 const locatainData = [
   {
@@ -43,8 +44,13 @@ const Home: NextPage = () => {
   const queryClient = useQueryClient();
   const { map, data } = React.useContext(MapContext);
   const { isError, isLoading, data: hanRiverData } = useHanRiverInfo("");
+
   const isDesktop = useMediaQuery({
     query: "(min-width:801px)",
+  });
+
+  const isMoile = useMediaQuery({
+    query: "(max-width:800px)",
   });
 
   React.useEffect(() => {
@@ -83,6 +89,13 @@ const Home: NextPage = () => {
       <Container>
         <Header />
         <MapWrapper id={"map"} />
+        {isMoile && (
+          <div>
+            <h3 className={"text"}>📍 한강 공원을 지도에서 선택해주세요 📍</h3>
+            <KakaoAdFit />
+            <Notice />
+          </div>
+        )}
         {isOpen && (
           <DataWrapper>
             <Info />
@@ -92,6 +105,14 @@ const Home: NextPage = () => {
           <DataWrapper>
             <h2 className={"text"}>📍 한강 공원을 지도에서 선택해주세요 📍</h2>
             <Notice />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <KakaoAdFit />
+            </div>
           </DataWrapper>
         )}
         {isLoading && hanRiverData === undefined && (
@@ -127,6 +148,12 @@ const Container = styled.div`
   padding-bottom: 30px;
   padding-top: 60px;
   background-color: white;
+
+  .text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
   .pulse {
     border-radius: 50%;
@@ -213,9 +240,14 @@ const Container = styled.div`
 const MapWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-
+  display: flex;
+  flex-direction: column;
   @media (min-width: 801px) {
     width: 70%;
+  }
+
+  @media (max-width: 800px) {
+    height: 50vh;
   }
 
   .none {
@@ -233,12 +265,6 @@ const DataWrapper = styled.div`
   top: 0;
   left: 0;
   overflow: auto;
-
-  .text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
 
   @media (max-width: 800px) {
     width: 100%;
