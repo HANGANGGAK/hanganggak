@@ -52,11 +52,11 @@ export const HeadMeta = () => {
           content="5b045220e7c350ae41da983b04db4c5b033758df"
         />
       </Head>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3899838752875465"
-        crossOrigin="anonymous"
-      />
+      {/*<Script*/}
+      {/*  async*/}
+      {/*  src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3899838752875465"*/}
+      {/*  crossOrigin="anonymous"*/}
+      {/*/>*/}
     </>
   );
 };
