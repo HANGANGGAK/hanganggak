@@ -10,7 +10,6 @@ import { useHanRiverInfo } from "../service/info";
 import { useModal } from "../stores/modal";
 import { useMapInfoStore } from "../stores/mapInfo";
 import Loading from "../components/common/Loading";
-import Logo3 from "../public/logo3.svg";
 import { useMediaQuery } from "react-responsive";
 import { Notice } from "../components/common/Notice";
 import KakaoAdFit from "../components/common/KakaoAdFit";

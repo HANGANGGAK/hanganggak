@@ -1,12 +1,19 @@
 import styled from "styled-components";
 import Image from "next/image";
-import Logo from "../../public/logo2.svg";
+// import Logo from "../../public/logoPng.png";
 import React from "react";
 
 const Header = () => {
   return (
     <Wrapper>
-      <Image src={Logo} alt="한강각 로고" width={200} height={50} />
+      <Image
+        src={"logo2.svg"}
+        alt="한강각 로고"
+        width={200}
+        height={50}
+        priority
+        className={"logo"}
+      />
     </Wrapper>
   );
 };

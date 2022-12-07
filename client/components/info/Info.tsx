@@ -2,8 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useMapInfoStore } from "../../stores/mapInfo";
 import { useModal } from "../../stores/modal";
-import CloseIcon from "../../assets/cancel.png";
-import CrossIcon from "../../assets/Cross.png";
+// import CrossIcon from "../../public/Cross.png";
 
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
@@ -28,7 +27,12 @@ const Info = () => {
       <Title>
         <div className={"title"}>{hanRiverData.placeName}</div>
         {isMobile && (
-          <Image src={CrossIcon} width={15} height={15} onClick={setIsClose} />
+          <Image
+            src={"/Cross.png"}
+            width={15}
+            height={15}
+            onClick={setIsClose}
+          />
         )}
       </Title>
       <hr />

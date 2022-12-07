@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { Fetcher } from "./api";
 
 export const fetchHanRiverInfo = async (search: string | undefined) => {
-  const url = `/han-river/${search}`;
+  const url = `${process.env.NEXT_PUBLIC_API_SERVER_URL}/han-river/${search}`;
   const method = "get";
   if (search === undefined) {
     return null;
