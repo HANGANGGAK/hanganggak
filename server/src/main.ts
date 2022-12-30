@@ -2,11 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
+import * as fs from 'fs';
 import * as ip from 'ip';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  const PROTOCOL = process.env.PROTOCOL;
+  const httpsOptions = {
+    key: fs.readFileSync(process.env.HTTPS_KEY),
+    cert: fs.readFileSync(process.env.HTTPS_CERT),
+  };
+
+  const app = await NestFactory.create(AppModule, { httpsOptions });
   const myIp = ip.address();
   const PORT = process.env.PORT;
 
@@ -21,6 +26,6 @@ async function bootstrap() {
 
   await app.listen(PORT);
 
-  console.log(`HANGANGGAK Server running: ${PROTOCOL}://${myIp}:${PORT}`);
+  console.log(`HANGANGGAK Server running: https://${myIp}:${PORT}`);
 }
 void bootstrap();
